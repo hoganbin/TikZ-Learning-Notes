@@ -1,0 +1,44 @@
+\chapter*{总结}
+总体感觉， Tikz 画图操作比较精确， 重要的是它与\LaTeX 完美内嵌。 唯一一点不习惯的是它的代码看起来没有 Matlab 整齐。
+
+有一个经疑问， 既然 TikZ 画图这么好看， 能否把它画的图另存为单独的文件呢？方法当然有， 就是使用 standalone 文档类。如下图就是用 standalone画好之后的 pdf 文件插入。
+
+\begin{tikzpicture}[>= stealth]
+\draw [->] (0,0,0) -- (2,0,0) node [at end, right] {$x$ 轴};
+\draw [->] (0,0,0) -- (0,2,0) node [at end, left] {$y$ 轴};
+\draw [->] (0,0,0) -- (0,0,2) node [at end, left] {$z$ 轴};
+\filldraw [red, rotate around z=0] (0,0) -- (1,1) -- (1,0);
+\draw [green, rotate around z=45] (0,0) -- (1,1) -- (1,0);
+\draw [blue, rotate around z=90] (0,0) -- (1,1) -- (1,0);
+\end{tikzpicture}
+\begin{tikzpicture}[>=Stealth,scale=0.2,smooth]
+%\draw[help lines] (0,0) grid (3,2);
+\draw[->](-10,0)--(0,0) node[below left=-1.2pt]{$O$}--(20,0) node[below=1.5pt]{$x$};
+\draw[->](0,-8)--(0,10)node[left]{$y$};
+%\draw [circle] (0,0)  circle (5) ;
+\coordinate (a) at (15,10);
+\node [circle,draw] (P) at (5,0) [minimum size=50pt,below] {$P$};
+\draw[blue] (a) -- (tangent cs:node=P,point={(a)},solution=1)
+-- (P.center) -- (tangent cs:node=P,point={(a)},solution=2)-- cycle;
+\end{tikzpicture}
+\begin{center}
+\begin{tikzpicture}[
+every node/.style ={inner sep=0pt},
+pgfornamentstyle/.style={color=green!50!black,fill=green!80!black}]
+\node[text width=12cm,outer sep=1.2cm,text centered,color=red!90! black](Greeting)
+{\calligra \Huge 第一届八一赛\\ 网络大学生数学竞赛\\2019年8月1号上午9点 \\
+	\pgfornament[color=red!90!black,width=4cm]{72}};
+\foreach \corner/\sym in {north west/none, north east/v, south west/h, south east/c}{
+	\node[anchor=\corner](\corner)
+	at(Greeting.\corner)
+	{\pgfornament[width=2cm,symmetry=\sym]{63}};}
+\path(north west)--(south west)
+node[midway, anchor=east]
+{\pgfornament[height=2cm]{9}}
+(north east)--(south east)
+node[midway,anchor=west]
+{\pgfornament[height=2cm, symmetry=v]{9}};
+\pgfornamenthline{north west}{north east}{north}{87}
+\pgfornamenthline{south west}{south east}{south}{87}
+\end{tikzpicture}
+\end{center}

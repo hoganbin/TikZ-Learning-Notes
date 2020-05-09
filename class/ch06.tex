@@ -1,0 +1,197 @@
+\chapter{流程图}
+\begin{center}
+\tikzset{
+	every picture/.style={
+		>=Stealth,
+		node distance=5mm and 5mm
+}}
+\tikzstyle{SS}      %开始结束
+=[rounded corners, draw]
+\tikzstyle{IO}      %输入输出
+=[trapezium, trapezium left angle=70, trapezium right angle=110, draw]
+\tikzstyle{NR}      %内容
+=[draw]
+\tikzstyle{PD}      %判断
+=[diamond, aspect=4, draw, inner sep=1.5pt]\hfill
+\begin{tikzpicture}[every node/.style={minimum width=1.8cm},->]
+\node[draw,rounded corners,minimum height=0.6cm,minimum width=1.3cm](start){开始};
+\node[rectangle,draw, below=of start](in){$A=\frac12$};
+\node[rectangle,draw, below=of in,minimum height=0.6cm](n1){$k=1$};
+\node[PD, below=of n1,minimum height=0.6cm](pd){$k\leqslant 2$};
+\node[rectangle,draw,below=of pd,minimum height=0.6cm](M1){};
+\node[rectangle,draw,below=of M1,minimum height=0.6cm](M2){$k=k+1$};
+\node[IO,right=of M1](M3){输出$A$};
+\node[SS,below=of M3,minimum width=1.3cm](M4){结束};
+\draw (pd)--node[right=-0.55cm]{是}(M1);
+\draw (pd) -| node[right=-.6cm]{否} (M3);
+\draw (M2.west)--++(-0.5,0) |- ($(n1.south)!0.5!(pd.north)$);
+\path(start)edge(in)
+(in)edge(n1)
+(n1)edge(pd)
+(pd)edge(M1)
+(M1)edge(M2)
+(M3)edge(M4);
+\end{tikzpicture}
+% 流程图定义基本形状
+\tikzstyle{ellipse}=[draw, rectangle, minimum width=2.8em, rounded corners=6pt,line width=0.5pt]% minimum height=1.5em, fill=red!20
+\tikzstyle{pxsbx}=[trapezium, trapezium left angle=75, trapezium right angle=105, minimum width=3em, text centered, draw = black, fill=white,line width=0.5pt]
+\tikzstyle{lingxing}=[draw,diamond,shape aspect=3,inner sep = 0.4pt,thick,font=\itshape,line width=0.5pt]
+%,minimum size=8mm
+\begin{tikzpicture}[node distance=1.2cm]
+%定义流程图具体形状
+\node (start) [ellipse,inner sep=1.5pt] {开始};
+\node (srn) [pxsbx, below of=start,node distance=1.0cm,inner sep=1.5pt] {输入};
+\node (yizhi) [minimum height=0cm,draw, below of=srn,node distance=1.0cm,inner sep=2pt] {过程};
+\node (tiaojian) [lingxing,draw, below of=yizhi,inner sep=1.5pt] {判断};
+\node (shi) [minimum height=0cm,draw, below of=tiaojian,inner sep=2pt] {循环1};
+\node (fuzhi1) [minimum height=0cm,draw, below of=shi,inner sep=2pt] {循环2};
+\node (fuzhi2) [minimum height=0cm,draw, below of=fuzhi1,inner sep=2pt] {循环3};
+\node (fou) [right of=tiaojian,xshift=1cm,coordinate]  {}; 
+\node (shuchus) [below of=fou,draw,pxsbx,inner sep=1.5pt,node distance=1.0cm]  {输出$\!S$}; 
+\node (end) [below of=shuchus,draw,ellipse,inner sep=1.5pt,node distance=1.0cm]  {结束}; 
+%连接具体形状
+\draw[arrows={-Stealth[scale=0.8]}](start) -- (srn);
+\draw[arrows={-Stealth[scale=0.8]}](srn) -- (yizhi) ;
+\path (yizhi) -- (tiaojian) coordinate[pos=0.5](yt);
+\node [left of=yt,coordinate,node distance=2.3cm] (c1)  {}; 
+\draw[arrows={-Stealth[scale=0.8]}](yizhi) -- (tiaojian);
+\draw[arrows={-Stealth[scale=0.8]}](tiaojian) -- node[right=-0.5mm,blue]{是}(shi);
+\draw[arrows={-Stealth[scale=0.8]}](shi) -- (fuzhi1);
+\draw[arrows={-Stealth[scale=0.8]}](fuzhi1)--(fuzhi2);
+\draw[arrows={Stealth[scale=0.8]-}](yt)--(c1);
+\draw(c1)|- (fuzhi2);
+\draw(tiaojian)-- node[midway,above=-1mm,blue]{否}(fou);
+\draw[arrows={-Stealth[scale=0.8]}](fou)--(shuchus);
+\draw[arrows={-Stealth[scale=0.8]}](shuchus)--(end);
+\end{tikzpicture}
+\end{center}
+
+\setlength{\unitlength}{1mm}
+\newcommand{\wrt}[1]{\makebox(0,0)[c]{#1}}
+\newcommand{\lline}[1]{\line(-1,0){#1}}
+\newcommand{\rline}[1]{\line(1,0){#1}}
+%\newcommand{\Uline}[1]{\line(0,1){#1}}
+\newcommand{\dline}[1]{\line(0,-1){#1}}
+%\newcommand{\lvec}[1]{\vector(-1,0){#1}}
+\newcommand{\rvec}[1]{\vector(1,0){#1}}
+\newcommand{\uvec}[1]{\vector(0,1){#1}}
+\newcommand{\dvec}[1]{\vector(0,-1){#1}}
+\newsavebox{\condition}
+\newsavebox{\process}
+\newsavebox{\inputoutput}
+\savebox{\process}(0,0){\thicklines
+	\put(-10,-3){\framebox(20,6){}}
+}
+\savebox{\condition}(0,0){\thicklines
+	\put(-10,0){\line(2,1){10}}
+	\put(-10,0){\line(2,-1){10}}
+	\put(10,0){\line(-2,1){10}}
+	\put(10,0){\line(-2,-1){10}}
+}
+\savebox{\inputoutput}(0,0){\thicklines
+	\put(-10.5,-3){\rline{18}}
+	\put(-10.5,-3){\line(1,2){3}}
+	\put(10.5,3){\lline{18}}
+	\put(10.5,3){\line(-1,-2){3}}
+}
+{\vspace*{1cm}\hspace*{3cm}
+	\begin{picture}(45,73)(20,-73)\thicklines
+	\put(40,3){\oval(15,6)}\put(40,3){\wrt{开始}} \put(40,0){\dvec{5}}
+	\put(40,-8){\usebox{\inputoutput}} \put(40,-8){\wrt{输入$m,\,n$}}
+	\put(40,-11){\dvec{5}} \put(40,-19){\usebox{\process}}
+	\put(40,-19){\wrt{$i=1$}} \put(40,-22){\dvec{8}}
+	\put(40,-33){\usebox{\process}} \put(40,-33){\wrt{$a=m\times i$}}
+	\put(40,-36){\dvec{5}} \put(40,-46){\usebox{\condition}}
+	\put(40,-46){\wrt{$n$整除$a$?}} \put(40,-51){\dvec{5}}
+	\put(41,-53){\makebox(0,0)[l]{是}}
+	\put(40,-59){\usebox{\inputoutput}} \put(40,-59){\wrt{输出$a,\,i$}}
+	\put(40,-62){\dvec{5}}
+	\put(40,-70){\oval(15,6)}\put(40,-70){\wrt{结束}}
+	\put(30,-46){\line(-1,0){15}} \put(28,-45){\makebox(0,0)[b]{否}}
+	\put(15,-46){\uvec{10}} \put(15,-33){\usebox{\process}}
+	\put(15,-33){\wrt{$i=i+1$}} \put(15,-30){\line(0,1){5}}
+	\put(15,-25){\rvec{25}}
+\end{picture}}
+% 流程图定义基本形状
+\tikzstyle{ellipse}=[draw, rectangle, minimum width=2.8em, rounded corners=6pt,line width=0.5pt]% minimum height=1.5em, fill=red!20
+\tikzstyle{pxsbx}=[trapezium, trapezium left angle=75, trapezium right angle=105, minimum width=3em, text centered, draw = black, fill=white,line width=0.5pt]
+\tikzstyle{lingxing}=[draw,diamond,shape aspect=3,inner sep = 0.4pt,thick,font=\itshape,line width=0.5pt]%,minimum size=8mm
+\begin{tikzpicture}[node distance=1.2cm]
+%定义流程图具体形状
+\node (start) [ellipse,inner sep=1.5pt] {开始};
+\node (srn) [pxsbx, below of=start,node distance=1.0cm,inner sep=1.5pt] {输入$\!n=0$};
+\node (yizhi) [minimum height=0cm,draw, below of=srn,node distance=1.0cm,inner sep=2pt] {$A=3^n-2^n$};
+\node (panduan) [lingxing,draw, below of=yizhi,inner sep=1.5pt,minimum width=5em,minimum height=1.5em,node distance=1cm] {\phantom{$N$}};
+\node (hh) [minimum height=0.95em,minimum width=3em,draw, left of=yizhi,node distance=1.0cm,inner sep=2pt,xshift=-0.8cm,yshift=-1mm] {$$};
+
+\node (shuchu) [below of=panduan,draw,pxsbx,inner sep=1.5pt,node distance=1.1cm]  {输出$\!n$}; 
+\node (end) [below of=shuchu,draw,ellipse,inner sep=1.5pt,node distance=1.0cm]  {结束};
+%连接具体形状
+\draw[arrows={-Stealth[scale=0.8]}](start) -- (srn);
+\draw[arrows={-Stealth[scale=0.8]}](srn) -- (yizhi) ;
+\path (srn) -- (yizhi) coordinate[pos=0.5](yt);
+\draw[arrows={-Stealth[scale=0.8]}](yizhi) -- (panduan) ;
+\draw[arrows={-Stealth[scale=0.8]}](panduan) -- (shuchu) node[pos=0.45,left=-1mm]{否};
+\draw[arrows={-Stealth[scale=0.8]}](panduan) -| (hh)node[left=-1.4em,below=2.4em]{是};
+\draw[arrows={-Stealth[scale=0.8]}](hh) |- (yt) ;
+\draw[arrows={-Stealth[scale=0.8]}](shuchu)--(end);
+\end{tikzpicture}
+
+%例1
+\begin{tikzpicture}[->,arrows={-Stealth[scale=0.8]}] 
+%放框 
+\node[SS](start){开始}; 
+\node[IO, below=of start](in){输入$N$}; 
+\node[NR, below=of in](n1){$k=1$, $S=0$}; 
+\node[NR, below=of n1](n2){$S=S+\dfrac1{k(k+1)}$}; 
+\node[NR, right=of n2](n3){$k=k+1$}; 
+\node[PD, below=of n2](pd){$k<N$}; 
+\node[IO, below=of pd](out){输出$S$}; 
+\node[SS, below=of out](stop){结束}; 
+%连线 
+\path 
+(start) edge (in) 
+(in) edge (n1) 
+(n1) edge (n2) 
+(n2) edge (pd) 
+(pd) edge node[right]{否}(out) 
+(out) edge (stop); 
+\draw (pd.east)node[below]{是} -| (n3); 
+\draw (n3) |- ($(n1.south)!0.5!(n2.north)$); 
+\end{tikzpicture}
+%例2
+\begin{tikzpicture}[->] 
+\node[SS](start){开始}; 
+\node[NR, below=of start](n1){$a=1$}; 
+\node[NR, below right=1mm and 5mm of n1](n2){$a=a^2+2$}; 
+\node[PD, below=8mm of n1](pd){$a<10$?}; 
+\node[IO, below=of pd](out){输出$a$}; 
+\node[SS, below=of out](stop){结束}; 
+\path (start) edge (n1) 
+(n1) edge (pd) 
+(pd) edge node[right]{否}(out) 
+(out) edge (stop); 
+\draw (pd.east)node[below]{是} -| (n2); 
+\draw (n2) -- (n2-|n1); 
+\end{tikzpicture}
+%例3
+\begin{tikzpicture}[->] 
+\node[SS](start){开始}; 
+\node[IO, below=of start](in){输入$x$, $t$}; 
+\node[NR, below=of in](n1){$M=1$, $S=3$, $k=1$}; 
+\node[PD, below=of n1](pd){$k\le t$}; 
+\node[NR, on grid, below left=1cm and 2cm of pd](n3){$M=\dfrac Mkx$}; 
+\node[IO, on grid, below right=1cm and 2cm of pd](out){输出$S$}; 
+\node[NR, below=of n3](n4){$S=M+S$}; 
+\node[NR, below=of n4](n5){$k=k+1$}; 
+\node[SS, below=of out](stop){结束}; 
+\path (start) edge (in) 
+(in) edge (n1) 
+(n1) edge (pd) 
+(n3) edge (n4) 
+(n4) edge (n5) 
+(out) edge (stop); 
+\draw (pd) -| node[left]{是} (n3); 
+\draw (pd) -| node[right]{否} (out); 
+\draw (n5.west)--++(-0.5,0) |- ($(n1.south)!0.5!(pd.north)$); 
+\end{tikzpicture}

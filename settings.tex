@@ -1,0 +1,223 @@
+\usepackage{amsmath}
+\usepackage{url}
+\usepackage{xcolor}
+\usepackage{color}
+\usepackage{cancel}
+\usepackage{pgfornament}
+\usepackage{calligra}
+\usepackage{pstricks-add}
+%\usepackage{tkz-linknodes}
+\usepackage{metalogo}
+\usepackage{scalerel} %\scaleobj{1.5}{} 缩放公式大小
+\usepackage{siunitx} %需用到\ang[options]{degrees}命令
+\definecolor{pink}{RGB}{249,164,186}
+\definecolor{grassgreen}{RGB}{128,255,0}
+\def\sgn{\mathop{\rm sgn}}
+%\setCJKmainfont[AutoFakeBold,AutoFakeSlant]{STSong}
+%\setCJKsansfont[AutoFakeBold,AutoFakeSlant]{KaiTi}
+%\setCJKmonofont[AutoFakeBold,AutoFakeSlant]{STFangsong}
+%\usepackage{verbatim}
+%\usepackage[active,tightpage]{preview}
+%\PreviewEnvironment{tikzpicture}
+%\setlength\PreviewBorder{5pt}
+\usepackage{tikz,pgfplots}
+\usepackage{circuitikz}
+\usetikzlibrary{
+	shapes.geometric,   %几何形状
+	calc,               %计算
+	positioning,       %用于提供位置表达语句的支持，通俗讲就是定位
+	arrows.meta,        %提供各种箭头
+	automata,          %绘制状态转换图
+	matrix,            %构建矩阵
+	topaths,%用于to/edge算子构建的路径
+	shapes.misc,       %约分
+	chains,          %绘制链状图形的库，一般画流程图必需的库
+	shadings,          %提供已定义好的图案如菱形
+	quotes,    %提供引用句法
+	angles,   %用来标示角
+	patterns,  %定义图样,如条纹
+	fadings,   %用于灰度图
+	fit,   %创建数个坐标点
+	decorations.pathmorphing,   %装饰线
+	decorations.text,
+	quotes,through,
+	intersections, %两个路径的交点
+	backgrounds,   %背景路径
+	shapes,
+	arrows,    %箭头路径
+	snakes,
+	mindmap, %思维导图
+	shadows,
+	circuits.ee.IEC%电路图
+}
+\tikzstyle{state}=[circle,label=below:$r$,
+thick,
+minimum size=1.2cm,
+draw=blue!80,
+fill=blue!20]
+\tikzstyle{state2}=[circle,label=below:$e$,
+thick,
+minimum size=1.2cm,
+draw=blue!80,
+fill=blue!20]
+\tikzstyle{state3}=[circle,label=below:$a$,
+thick,
+minimum size=1.2cm,
+draw=blue!80,
+fill=blue!20]
+\tikzstyle{state4}=[circle,label=below:$d$,
+thick,
+minimum size=1.2cm,
+draw=blue!80,
+fill=blue!20]
+% The measurement vector is represented by an orange circle.
+\tikzstyle{measurement}=[circle,
+thick,
+minimum size=1.2cm,
+draw=orange!80,
+fill=orange!25]
+
+% The control input vector is represented by a purple circle.
+\tikzstyle{input}=[circle,
+thick,
+minimum size=1.2cm,
+draw=purple!80,
+fill=purple!20]
+
+% The input, state transition, and measurement matrices
+% are represented by gray squares.
+% They have a smaller minimal size for aesthetic reasons.
+\tikzstyle{matrx}=[rectangle,
+thick,
+minimum size=1cm,
+draw=gray!80,
+fill=gray!20]
+
+% The system and measurement noise are represented by yellow
+% circles with a "noisy" uneven circumference.
+% This requires the TikZ library "decorations.pathmorphing".
+\tikzstyle{noise}=[circle,
+thick,
+minimum size=1.2cm,
+draw=yellow!85!black,
+fill=yellow!40,
+decorate,
+decoration={random steps,
+	segment length=2pt,
+	amplitude=2pt}]
+
+% Everything is drawn on underlying gray rectangles with
+% rounded corners.
+\tikzstyle{background}=[rectangle,
+fill=gray!10,
+inner sep=0.2cm,
+rounded corners=5mm]
+
+
+
+
+
+\usepackage{scalerel} %\scaleobj{1.5}{} 缩放公式大小
+\newcommand\hcancel[2][black]{\setbox0=\hbox{#2}\rlap{\raisebox{.45\ht0}{\textcolor{#1}{\rule{\wd0}{1pt}}}}#2}
+
+
+\definecolor{pink}{RGB}{249,164,186}
+\definecolor{grassgreen}{RGB}{128,255,0}
+
+\pgfkeys{/pgf/decoration/.cd,
+	stipple density/.store in=\pgfstippledensity,
+	stipple density=.1,
+	stipple scaling function/.store in=\pgfstipplescalingfunction,
+	stipple scaling function=sin(\pgfstipplex*180)*0.875+0.125,
+	stipple radius/.store in=\pgfstippleradius,
+	stipple radius=0.25pt
+}
+\pgfdeclaredecoration{stipple}{draw}{
+	\state{draw}[width=\pgfdecorationsegmentlength]{
+		\pgfmathparse{\pgfdecoratedcompleteddistance/\pgfdecoratedpathlength}%
+		\let\pgfstipplex=\pgfmathresult%
+		\pgfmathparse{int(\pgfstippledensity*100)}%
+		\let\pgfstipplen=\pgfmathresult
+		\pgfmathloop
+		\ifnum\pgfmathcounter<\pgfmathresult\relax
+		\pgfpathcircle{%
+			\pgfpoint{(rnd)*\pgfdecorationsegmentlength}%
+			{(\pgfstipplescalingfunction)*(rnd^4)*\pgfdecorationsegmentamplitude+\pgfstippleradius}}% 
+		{\pgfstippleradius}%
+		\repeatpgfmathloop
+	}
+}
+
+\tikzset{stipple/.style={
+		decoration={stipple, segment length=2pt, #1},
+		decorate,
+		fill
+}}
+% end of stippling code
+
+\newcommand\DrawBlock[3]{
+	\ifx#1b\relax
+	\path[draw]
+	(lm\the\numexpr#2-1\relax) -- ++(0,0,#3) coordinate (blocklf)
+	(bm\the\numexpr#2-1\relax) -- ++(0,0,#3) coordinate (blocklb)
+	(lm#2) -- ++(0,0,#3) coordinate (blockrf)
+	(bm#2) -- ++(0,0,#3) coordinate (blockrb);
+	\filldraw[fill=white,draw=black]
+	(lm\the\numexpr#2-1\relax) -- (blocklf) -- (blocklb) -- (blockrb) -- (blockrf) -- (lm#2);
+	\else  
+	\ifx#1f\relax
+	\path[draw]
+	(fm\the\numexpr#2-1\relax) -- ++(0,0,#3) coordinate (blocklf)
+	(lm\the\numexpr#2-1\relax) -- ++(0,0,#3) coordinate (blocklb)
+	(fm#2) -- ++(0,0,#3) coordinate (blockrf)
+	(lm#2) -- ++(0,0,#3) coordinate (blockrb);
+	\filldraw[fill=white,draw=black]
+	(fm\the\numexpr#2-1\relax) -- (blocklf) -- (blocklb) -- (blockrb) -- (blockrf) -- (fm#2);
+	\fi
+	\fi
+	\draw (blocklf) -- (blockrf);
+}
+
+\tikzset{
+	every picture/.style={
+		>=latex,
+		node distance=5mm and 5mm
+		%有无and的区别见手册positioning部分
+}}
+
+%定义框形状
+\tikzstyle{SS}      %开始结束
+=[rounded corners, draw,rectangle]
+\tikzstyle{IO}      %输入输出
+=[trapezium, trapezium left angle=70, trapezium right angle=110, draw]
+\tikzstyle{NR}      %内容
+=[draw]
+\tikzstyle{PD}      %判断
+=[diamond, aspect=4, draw, inner sep=1.5pt]
+
+
+
+%\usepackage{background}
+%\definecolor{bg}{RGB}{58,95,205}
+%\backgroundsetup{opacity=0.05,scale=1.2,angle=0,contents={
+%		\begin{tikzpicture}
+%		\node[minimum width=18cm,minimum height=25cm,inner sep=0pt,outer sep=0pt,](box){};
+%		\fill[left color=bg!70!black!70,right color=bg!70!black] (box.south west)--(box.south east)--(box.north east)--(box.north west)--cycle;
+%		\shade[inner color=bg!70!black,outer color=white!30!bg] (3,6)circle(.3cm);
+%		\draw[opacity=.2,blue] (4,-6)circle(3cm);
+%		\draw[opacity=.2,blue] (3,-5)circle(5cm);
+%		\draw[opacity=.2,blue] (2,-3)circle(6cm);
+%		\shade[inner color=bg!70!black,outer color=white!30!bg,xshift=-2cm,yshift=-11cm] (3,6)circle(.3cm);
+%		\shade[inner color=bg!70!black,outer color=white!30!bg,xshift=1.3cm,yshift=-12cm] (3,6)circle(.3cm);
+%		\shade[inner color=bg!70!black,outer color=white!30!bg,xshift=-4cm,yshift=-8cm] (3,6)circle(.3cm);
+%		\shade[inner color=bg!70!black,outer color=white!30!bg,xshift=-6cm,yshift=-10cm] (3,6)circle(.3cm);
+%		\shade[inner color=bg!70!black,outer color=white!30!bg,xshift=-6cm,yshift=-13cm] (3,6)circle(.3cm);
+%		\end{tikzpicture}
+%}}
+
+%\usepackage{draftwatermark}
+%\SetWatermarkText{\shortstack
+%	{微信公众号：八一考研数学竞赛
+%}}
+%\SetWatermarkLightness{0.50}%设置水印亮度
+%\SetWatermarkScale{0.3}%设置水印大小

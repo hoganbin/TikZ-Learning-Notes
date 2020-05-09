@@ -1,0 +1,26 @@
+\chapter{直方图}
+\begin{tikzpicture}[xscale=0.7,yscale=10,>=Stealth]
+\draw[decorate,decoration={snake,segment length=1mm,amplitude=0.5mm}]
+(0,0)node[below left]{$O$}--(0.5,0);
+\draw[->](0.5,0)--(8.3,0)node[below]{百分比};
+\draw[->](0,0)--(0,0.4)node[right]{频率/组距};
+\foreach \x in{2.5,...,8.5}
+\node[below]at(\x-1.5,0){$\x$};
+\draw(1,0)--(1,0.05)--(2,0.05)(2,0)--(2,0.1)--(3,0.1)(3,0)--(3,0.15)--(4,0.15)(4,0)--(4,0.35)--(5,0.35)--(5,0.35)--(5,0)(5,0.2)--(6,0.2)--(6,0)(6,0.15)--(7,0.15)--(7,0);
+\draw[densely dotted](6,0.15)--(0,0.15)node[left]{$0.15$}
+(5,0.2)--(0,0.2)node[left]{$0.20$}(4,0.35)--(0,0.35)node[left]{$a$}(2,0.1)--(0,0.1)node[left]{$b$}(1,0.05)--(0,0.05)node[left]{$0.05$};
+\end{tikzpicture}
+\begin{tikzpicture}[xscale=0.7,yscale=10,>=Stealth]
+\draw[decorate,decoration={snake,segment length=1mm,amplitude=0.5mm}]
+(0,0)node[below left]{$O$}--(0.5,0);
+\draw[->](0.5,0)--(8.3,0)node[below]{百分比};
+\draw[->](0,0)--(0,0.4)node[right]{频率/组距};
+\foreach \x in{1.5,...,7.5}
+\node[below]at(\x-0.5,0){$\x$};
+\draw(1,0)--(1,0.15)--(2,0.15)(2,0)--(2,0.2)--(3,0.2)(3,0)--(3,0.3)
+--(4,0.3)--(4,0)(4,0.2)--(5,0.2)--(5,0)(5,0.1)--(6,0.1)--(6,0)(6,0.05)--
+(7,0.05)--(7,0);
+\draw[densely dotted](6,0.05)--(0,0.05)node[left]{$0.05$}
+(5,0.1)--(0,0.1)node[left]{$0.10$}(4,0.2)--(3,0.2)(2,0.2)--(0,0.2)
+node[left]{$0.20$}(3,0.3)--(0,0.3)node[left]{$0.30$}(1,0.15)--(0,0.15)node[left]{$0.15$};
+\end{tikzpicture}

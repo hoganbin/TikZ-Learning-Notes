@@ -1,0 +1,34 @@
+\chapter{特殊纸张}
+\tikzstyle{topline}=[draw=blue]
+\tikzstyle{bottomline}=[draw=blue]
+\tikzstyle{midline}=[draw=red]
+\tikzstyle{dashedline}=[draw=red,dashed]
+\noindent\makebox[\textwidth][c]{\bf\scalebox{2.5}[3]{办公专用草纸}}
+%\vspace{0.1pt}
+\par\noindent
+\begin{tikzpicture}[scale=1]
+\foreach\i in{20.6,19.2,...,-0.4}{
+	\draw[midline](0,\i-1)--(\textwidth,\i-1);
+	\draw[dashedline](0,\i-0.6)--(\textwidth,\i-0.6);
+	\draw[midline](0,21)--(\textwidth,21);%次顶线
+	\draw[midline](0,21.1)--(\textwidth,21.1);%顶线
+}
+\end{tikzpicture}
+\noindent\makebox[\textwidth][l]{\bf\scalebox{1}[1]{办公专用草纸}\hfill\today}
+
+%%稿纸效果
+%\begin{tikzpicture}[scale=1,domain=0:17]
+%\draw(8.5,24)node{\bf\scalebox{2}[2.5]{办公用纸}
+%	\clip(0,-1)rectangle(17,24);
+%	\foreach\m in(0,1,2,...,19)\draw[dash pattern=on 2.5pt off 2.5pt]plot(\x,1.2*\m);
+%	 	\foreach\n in(-1,0,1,...,23)\draw[thick]plot(\x,1.2*\n+0.3);
+%\end{tikzpicture}
+%\rule{1.5cm}{Opt}
+%\begin{tikzpicture}[scale=1,domain=0:15]
+%\draw(7.5,20)node{\bf\scalebox{2}[2.5]{办公用纸}};
+%\clip(0,-1)rectangle(15,20);
+%\foreach\m in{0,1,2,...,19}
+%\draw[dash pattern=on 2.5pt off 2.5pt]plot(\x,\m);
+%\foreach\n in{-1,0,1...,23}
+%\draw[]plot(\x,\n+0.3);
+%\end{tikzpicture}

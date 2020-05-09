@@ -1,0 +1,88 @@
+\documentclass[cn,11pt, simple]{elegantbook}
+
+\title{TikZ学习入门之葵花宝典}
+\subtitle{未完续}
+
+\author{八一}
+\institute{ hoganbin1995@outlook.com}
+\weixin{八一考研数学竞赛}
+\date{ \today}
+
+\input{settings}
+\version{3.09}
+
+
+\extrainfo{人生的意义，在于折腾}
+
+\logo{logo.png}
+\cover{cover.pdf}
+\includeonly{class/ch01}
+
+
+
+\begin{document}
+\maketitle
+\tableofcontents
+% \thispagestyle{empty}
+\mainmatter
+\hypersetup{pageanchor=true}
+
+\chapter*{前言}
+
+在学习\LaTeX 与 TikZ过程中，八一发现到大家其学习\LaTeX 曲线陡峭，它并非所见即所得，可能一个微小的改动需要长时间的全文编译，而且代码并不能真正显示事物本来的样子，TikZ 的底层是 PGF(portable graphics format) ，即它是PGF 的前端。
+
+它也并不是唯一可以在 \LaTeX 中画出漂亮图的宏包，比如 xfig 就可以代替它。另外 pstricks 和 metapost 都可以完成 TikZ 的工作；在PGF 中有很多优秀的并且可以独立于 PGF 之外运行的包。比如pgfpages宏包，它功能强大，可以合并多页，可以制作水印，可以将多页缩放到一个页面里；pgfplots宏包可直接调用一个axis环境和进行一些简单的优化来绘制函数并通过数据点拟合函数和散点图等。
+
+那我们开始学习TikZ，首先得有个前提工作：这里的\lstinline|tikz|宏包的加载是必须的，而\lstinline|tikz|有两种使用方法：一种命令式用\lstinline|\tikz|命令，是行内模式；一种环境式用\lstinline|tikzpicture|环境命令包围起来，是行间模式。如下所示：
+\begin{lstlisting}
+\tikz{\draw (1,0) -- (0,1) -- (-1,0) -- (0,-1) -- cycle;} 
+\begin{tikzpicture} 
+\draw (1,0) -- (0,1) -- (-1,0) -- (0,-1) -- cycle; 
+\end{tikzpicture}
+\end{lstlisting}
+
+行内模式对于注重内容的用户相对较少，基本不用，这种模式下直接调用而\lstinline|\tikz|命令。但不管是注重华丽表现效果还是注重内容的用户，总是会有需求需要某一整张图片来表达某些内容，而\lstinline|tikz|以及其他基于\lstinline|tikz|的宏包在命令行绘图这个领域是不错的。下面将主要使用\lstinline|tikzpicture|环境命令模式。
+
+用\lstinline|tikz|绘制某个单独的图片而不是一般的A4页面推荐使用 standalone 类。如下所示：
+\begin{lstlisting}
+\documentclass[tikz,border=2pt]{standalone} 
+\begin{document} 
+\begin{tikzpicture} 
+\draw[step=1,color=gray!40] (-2,-2) grid (2,2); 
+\draw[->] (-3,0) -- (3,0); 
+\draw[->] (0,-3) -- (0,3); 
+\draw (0,0) circle (1);  
+\end{tikzpicture} 
+\end{document}
+\end{lstlisting}
+
+\include{class/ch01}
+\include{class/ch02}
+\include{class/ch03}
+\include{class/ch04}
+\include{class/ch05}
+\include{class/ch06}
+\include{class/ch07}
+\include{class/ch08}
+\include{class/ch10}
+\include{class/ch09}
+
+\nocite{*} 
+\begin{thebibliography}{99}
+	
+	\addcontentsline{toc}{section}{参考文献} % 在目录中显示参考文献
+	
+	\bibitem{1} \url{http://hohei3108.hatenablog.com/entry/2017/10/15/000611}
+	
+	\bibitem{2} \url{https://blog.csdn.net/stereohomology/article/details/24266409}
+	
+	\bibitem{3} \href{https://www.latexstudio.net/}{\LaTeX 科技排版工作室}
+	
+	\bibitem{4} \url{https://github.com/Chris7462/TikZ}
+	
+	\bibitem{5} \url{http://blog.sina.com.cn/s/blog_72277faf0100xqz6.html}
+\end{thebibliography}
+%\bibliography{reference}
+
+\end{document}
+
